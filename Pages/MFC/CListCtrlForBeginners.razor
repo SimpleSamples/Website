@@ -62,32 +62,19 @@ for (i=0; i&lt;n; ++i)
 <h2 style="margin-top: 20"> Confusing Terminology</h2>
 <p>Microsoft has made things very confusing because the Platform SDK name for a
 	listbox is &quot;ListBox Control&quot; but MFC programmers usually use
-	&quot;list control&quot; to refer to an instance of the
-	<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CListCtrl.asp>
-	CListCtrl</a> class, which is confusing. Also, the MFC class name for a
-	&quot;List View Control&quot; is
-	<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CListCtrl.asp>
-	CListCtrl</a>
-	and
-	<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CListView.asp>CListView</a>
-	is the view class for it. The MFC class name for a &quot;ListBox Control&quot; is
-	<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CListBox.asp>CListBox</a>
+	&quot;list control&quot; to refer to an instance of the CListCtrl class,
+	which is confusing. Also, the MFC class name for a
+	&quot;List View Control&quot; is CListCtrl and CListView is the view class
+	for it. The MFC class name for a &quot;ListBox Control&quot; is CListBox
 	so we would expect the view class for it to also be CListView except there
 	is not a view class. The following summarizes this.</p>
-	<p style="text-indent: -20; margin-left: 40"><b>Platform SDK name:</b>
-	<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/shellcc/platform/commctls/listboxes/listboxes.asp>List Boxes</a><br>
-	<b>Window class name:</b>
-	ListBox (See under "Predefined Controls" in
-	<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/shellcc/platform/CommCtls/Common/user.asp>User Controls</a>
-	and the documentation for
-	<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winui/winui/windowsuserinterface/windowing/windows/windowreference/windowfunctions//CreateWindow.asp>CreateWindow</a> and <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winui/winui/windowsuserinterface/windowing/windows/windowreference/windowfunctions//CreateWindowEx.asp>CreateWindowEx</a>)<br>
-	<b>MFC class name:</b>  <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CListBox.asp>CListBox</a><br>
+	<p style="text-indent: -20; margin-left: 40"><b>Platform SDK name:</b> List Boxes
+	<br><b>Window class name:</b> ListBox<br>
+	<b>MFC class name:</b> CListBox<br>
 	<b>MFC view class name:</b> none</p>
-	<p style="text-indent: -20; margin-left: 40"><b>Platform SDK name:</b> <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/shellcc/platform/CommCtls/ListView/ListView.asp>ListView Control </a><br>
+	<p style="text-indent: -20; margin-left: 40"><b>Platform SDK name:</b> ListView Control<br>
 	<b>Window class name:</b> SysListView32 (use WC_LISTVIEW in source code instead,
 	which is defined as &quot;SysListView32&quot;)<br>
-	<b>MFC class name:</b>
-	<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CListCtrl.asp>CListCtrl</a><br>
-	<b>MFC view class name:</b>
-	<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CListView.asp>CListView</a>
+	<b>MFC class name:</b> CListCtrl<br>
+	<b>MFC view class name:</b> CListView
 </p>

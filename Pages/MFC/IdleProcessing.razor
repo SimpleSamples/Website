@@ -68,18 +68,3 @@ message, as in the following:&nbsp;</p>
 <p>Except LPARAM is the idle count corresponding to
 the idle count for <span style="font-variant: small-caps">WM_IDLE</span>. Return TRUE/FALSE
 to continue/discontinue idle processing.</p>
-<h3>References</h3>
-<p>The following is about everything that Microsoft has to say about <span style="font-variant: small-caps">WM_KICKIDLE</span>.
-The sample code above is a simpler version of one of these.</p>
-<ul>
-	<li><a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWnd.asp>CWnd</a>::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWnd.3a3a.RunModalLoop.asp>RunModalLoop</a></li>
-	<li><a href="http://www.microsoft.com/msj/archive/S13EC.aspx">MSJ
-		June 1996 C/C++ Q&amp;A</a> (The last question asks about idle processing in 
-		modal dialogs and the answer is to the <span style="font-variant: small-caps">
-		WM_KICKIDLE</span><font size="2"> message.</font>)</li>
-	<li><a href="http://www.microsoft.com/msj/0797/c0797.aspx">MSJ
-		July 1997 C/C++ Q&amp;A</a> (The last question asks how to change the tab order 
-		of controls in a dialog box and the answer includes a description of the
-		<span style="font-variant: small-caps">WM_KICKIDLE</span><font size="2"> 
-		message</font>.)</li>
-</ul>
