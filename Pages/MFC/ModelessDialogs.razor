@@ -1,4 +1,4 @@
-﻿@page "/MFC/ModelessDialogs"
+@page "/MFC/ModelessDialogs"
 @code {private string title = "Modeless Dialogs";}
 <PageTitle>@title</PageTitle>
 <h1 class="text-center">@title</h1>
@@ -25,35 +25,31 @@ Q216503 - PRB: Problems Showing an ATL Dialog Box as Modeless in ATL .exe</a>.</
 
 <p>You can create a modeless-dialog-based application by generating a dialog-based
 application using AppWizard, then modifying it as follows. Use ClassWizard to override
-<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWnd.3a3a.PostNcDestroy.asp>PostNcDestroy</a>, OnOK and OnCancel in the dialog and make them look something like this:</p>
+PostNcDestroy, OnOK and OnCancel in the dialog and make them look something like this:</p>
 
-  <pre>void CModelessDlg::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWnd.3a3a.PostNcDestroy.asp>PostNcDestroy</a>() {
-CDialog::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWnd.3a3a.PostNcDestroy.asp>PostNcDestroy</a>();
+<pre>void CModelessDlg::PostNcDestroy() {
+CDialog::PostNcDestroy();
 delete this;
 }</pre>
-  <pre>void CModelessDlg::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.3a3a.OnOK.asp>OnOK</a>() {
+  <pre>void CModelessDlg::OnOK() {
 MessageBox(&quot;Ok&quot;);
 }</pre>
-  <pre>void CModelessDlg::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.3a3a.OnCancel.asp>OnCancel</a>() {
-<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWnd.3a3a.DestroyWindow.asp>DestroyWindow</a>();
+<pre>void CModelessDlg::OnCancel() {
+DestroyWindow();
 }</pre>
 
-<p>The override for <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWnd.3a3a.PostNcDestroy.asp>PostNcDestroy</a>
+<p>The override for PostNcDestroy
 is necessary because our program does not know when the dialog will be
 dismissed. So the dialog must take care of removing itself from the system. Refer to the documentation for 
-<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.asp>CDialog</a>::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.3a3a.OnOK.asp>OnOK</a> and <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.asp>CDialog</a>::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.3a3a.OnCancel.asp>OnCancel</a>
- for an explanation of those overrides. In particular, notice that if you want <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.3a3a.OnOK.asp>OnOK</a>
- <b>to dismiss</b> the dialog, then you need to call 
- <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWnd.3a3a.DestroyWindow.asp>DestroyWindow</a>
- in <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.3a3a.OnOK.asp>OnOK</a>
- also.
-</p>
+CDialog::OnOK and CDialog::OnCancel
+ for an explanation of those overrides. In particular, notice that if you want OnOK
+ <b>to dismiss</b> the dialog, then you need to call DestroyWindow in OnOK also.</p>
 
 <p>Then in your application's InitInstance, <strong>replace</strong>:</p>
 
 <pre>CModelessDlg dlg;
-<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinThread.3a3a.m_pMainWnd.asp>m_pMainWnd</a> = &amp;dlg;
-int nResponse = dlg.<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.3a3a.DoModal.asp>DoModal</a>();
+m_pMainWnd = &amp;dlg;
+int nResponse = dlg.DoModal();
 if (nResponse == IDOK)
 	{
 	}
@@ -64,12 +60,12 @@ else if (nResponse == IDCANCEL)
 <p>with:</p>
 
 <pre>CModelessDlg *pModelessDlg = new CModelessDlg();
-<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinThread.3a3a.m_pMainWnd.asp>m_pMainWnd</a> = pModelessDlg;
-if (pModelessDlg-&gt;<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.3a3a.Create.asp>Create</a>(IDD_MODELESS_DIALOG))
+m_pMainWnd = pModelessDlg;
+if (pModelessDlg-&gt;Create(IDD_MODELESS_DIALOG))
 	return TRUE;</pre>
 
 <p>To understand what is happening here, it is necessary to understand a couple of things about
-<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinApp.asp>CWinApp</a>::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinApp.3a3a.InitInstance.asp>InitInstance</a>.
+CWinApp::InitInstance.
 InitInstance normally executes, then exits after it has created the main window. In a
 dialog-based application, though, InitInstance is usually used to execute the <strong>entire</strong>
 application, in which case the application exits after the dialog exits. For a
@@ -81,14 +77,13 @@ deleted when InitInstance exits, but we modify that by creating the dialog in th
 
 <hr>
 
-<p>Note that in the <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.asp>CDialog</a> documentation it says &quot;If you wish to create a
+<p>Note that in the CDialog documentation it says &quot;If you wish to create a
 modeless dialog, call <b>Create</b> in the constructor of your dialog class.&quot;. I do not understand
-that and it seems to be unnecessary. In <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.asp>CDialog</a>::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.3a3a.Create.asp>Create</a>
+that and it seems to be unnecessary. In CDialog::Create
 it says &quot;You can put the call to <b>Create</b> inside the constructor or call it
 after the constructor is invoked.&quot;.</p>
 
-<p>Also, <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CDialog.3a3a.OnOK.asp>OnOK</a> says to call
-<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWnd.3a3a.DestroyWindow.asp>DestroyWindow</a>
+<p>Also, OnOK says to call DestroyWindow
 in OnOk. This should be done if you want the dialog to end when the Ok button is pressed,
 but it is not necessary if you want the dialog to continue after the Ok button is
 pressed.</p>
@@ -102,8 +97,7 @@ since that makes more sense. The command id (ID_CANCEL) could still be used, tho
 this would be the best solution. A good example of when to create a modeless dialog on the
 stack is for a progress dialog that is used in just one function and then is not needed
 after the function completes. If a modeless dialog is created on the stack, then the
-override for
-<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWnd.3a3a.PostNcDestroy.asp>PostNcDestroy</a>
+override for PostNcDestroy
 is not needed and should not be used (at least not the &quot;<tt>delete this</tt>&quot;),
 since the dialog will be deleted automatically when the function exits.</p>
 

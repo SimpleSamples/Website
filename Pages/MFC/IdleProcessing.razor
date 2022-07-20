@@ -3,17 +3,17 @@
 <PageTitle>@title</PageTitle>
 <h1 class="text-center">@title</h1>
 
-<p>The default MFC processing for <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinApp.asp>CWinApp</a>::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinApp.3a3a.OnIdle.asp>OnIdle</a>
+<p>The default MFC processing for CWinApp::OnIdle
 is to return TRUE if lCount is zero and return FALSE otherwise.
 This means that it gets called when the value is zero or one but after that
 it is not called again until after there is another message. Try overriding
-<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinApp.asp>CWinApp</a>::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinApp.3a3a.OnIdle.asp>OnIdle</a> and use something such as the following:</p>
+CWinApp::OnIdle and use something such as the following:</p>
 <pre>BOOL COnIdleApp::OnIdle(LONG lCount) {
 TRACE1(&quot;%i OnIdle\n&quot;, lCount);
 if (lCount == 0)
-	return <a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinApp.asp>CWinApp</a>::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinApp.3a3a.OnIdle.asp>OnIdle</a>(lCount);
+	return CWinApp::OnIdle(lCount);
 if (lCount == 1) {
-	<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinApp.asp>CWinApp</a>::<a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmfc98/html/_mfc_CWinApp.3a3a.OnIdle.asp>OnIdle</a>(lCount);
+	CWinApp::OnIdle(lCount);
 	return 1;
 	}
 if (lCount &lt; 9)
@@ -32,7 +32,7 @@ return DoIdleWork(); // Do our application's idle processing.
 <p>The following is not a complete list of material about idle processing
 but it is some.</p>
 <dir>
-  <li><a href=http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/HTML/_core_idle_loop_processing.asp>Idle Loop Processing</a>
+  <li>Idle Loop Processing
   does not describe the OnIdle solution much but it does describe a couple of
   alternatives that use PeekMessage in a message loop.</li>
 </dir>
