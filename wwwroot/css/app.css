@@ -1,8 +1,22 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+.codeblock {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 40px;
+    margin-right: 40px;
+    white-space: pre;
+    unicode-bidi: embed;
+    font-family: monospace;
 }
+
+.inlcode {
+    font-family: monospace;
+}
+
+/* html, body {font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;} */
 
 h1:focus {
     outline: none;
