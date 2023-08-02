@@ -1,7 +1,50 @@
 ﻿@page "/Miscellaneous/DeployGitHubToDroplet"
 @code {
-    private string title = "Deploy GitHub To DigitalOceann Droplet";
+    private string title = "Deploy GitHub To DigitalOcean Droplet";
 }
 <PageTitle>@title</PageTitle>
 <h1 class="text-center">@title</h1>
-<p>Test</p>
+<p>This article shows how to use a GitHub Workflow (actions) to deploy a
+    repository to a DigitalOcean Droplet by just copying files. The deployment
+    can be done after a build and other processing is done.
+</p>
+<p>Assumptions:</p>
+<ul>
+    <li>GitHub repository with a SSH key (without a passphrase) for
+        Authentication</li>
+    <li>DigitalOcean Droplet</li>
+</ul>
+<p>The following is a sample workflow that checks out the repository then uses
+    <span class='inlcode'>easingthemes/ssh-deploy</span> to copy the files to
+    the Droplet. Apparently that action does not support passphrases therefore
+    if your SSH key is protected with a passphrase then you will need to create
+    a new SSH key.
+</p>
+<div class='codeblock'>
+name: Droplet Website
+run-name: Deploying website for ???
+on: [push]
+jobs:
+  Droplet-Deploy-Root:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Deploy
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.DROPLET_KEY_SECRET }}
+        ARGS: "-rlgoDzvc -i"
+        SOURCE: "<i><b>source</b></i>"
+        REMOTE_HOST: ${{ secrets.DROPLET_HOST_SECRET}}
+        REMOTE_USER: ${{ secrets.DROPLET_USERNAME_SECRET }}
+        TARGET: /var/www/<i><b>targetdirectory</b></i>
+</div>
+<p>You need to create the following secret variables in your repository:</p>
+<ul>
+    <li>DROPLET_HOST_SECRET</li>
+    <li>DROPLET_USERNAME_SECRET</li>
+    <li>DROPLET_KEY_SECRET (the private, not public, key)</li>
+</ul>

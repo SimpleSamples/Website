@@ -1,0 +1,15 @@
+﻿
+.codeblock {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 40px;
+    margin-right: 40px;
+    white-space: pre;
+    unicode-bidi: embed;
+    font-family: monospace;
+}
+
+.inlcode {
+    font-family: monospace;
+}
